@@ -6,10 +6,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
 public class ResultActivity extends AppCompatActivity {
+    TextView tvTitle;
+    ImageView imgV;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,6 +21,23 @@ public class ResultActivity extends AppCompatActivity {
         Intent intent = getIntent();
         String[] imgName = intent.getStringArrayExtra("imgName");
         int[] voteCount = intent.getIntArrayExtra("voteCount");
+        int[] imgRes = {R.drawable.asaprocky, R.drawable.lilnasx, R.drawable.postmalone,
+                        R.drawable.kanyewest, R.drawable.offset, R.drawable.quavo,
+                        R.drawable.dababy, R.drawable.lilbaby, R.drawable.nlechoppa};
+
+        tvTitle = findViewById(R.id.text_title);
+        imgV = findViewById(R.id.imgv);
+
+        int max = voteCount[0];
+        int maxIndex = 0;
+        for (int i=0; i<voteCount.length; i++) {
+            if (max < voteCount[i]) {
+                max = voteCount[i];
+                maxIndex = i;
+            }
+        }
+        tvTitle.setText(imgName[maxIndex]);
+        imgV.setImageResource(imgRes[maxIndex]);
 
         TextView[] tv = new TextView[imgName.length];
         int[] textId = {R.id.text01, R.id.text02, R.id.text03,
@@ -42,5 +62,6 @@ public class ResultActivity extends AppCompatActivity {
                 finish();
             }
         });
+
     }
 }
